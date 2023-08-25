@@ -1,6 +1,6 @@
 lsw - list windows
 ==================
-lsw prints the title and XID of windows to stdout.
+lsw prints the XID, class and title of windows to stdout.
 
 
 Requirements
