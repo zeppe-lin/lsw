@@ -22,8 +22,7 @@ INCS = -I${X11INC}
 LIBS = -L${X11LIB} -lX11
 
 # flags
-CPPFLAGS = -DVERSION=\"${VERSION}\"
-CFLAGS   = -ansi -pedantic -Wall ${INCS} ${CPPFLAGS}
+CFLAGS   = -ansi -pedantic -Wall -DVERSION=\"${VERSION}\" ${INCS}
 LDFLAGS  = ${LIBS}
 
 # compiler and linker
