@@ -23,8 +23,8 @@ LIBS = -L${X11LIB} -lX11
 
 # flags
 CPPFLAGS = -DVERSION=\"${VERSION}\"
-CFLAGS   = -ansi -pedantic -Wall -Os ${INCS} ${CPPFLAGS}
-LDFLAGS  = -s ${LIBS}
+CFLAGS   = -ansi -pedantic -Wall ${INCS} ${CPPFLAGS}
+LDFLAGS  = ${LIBS}
 
 # compiler and linker
 CC = cc
