@@ -4,8 +4,18 @@ lsw \- list windows
 .SH SYNOPSIS
 .B lsw
 .RI [ window ...]
+.PP
+.B lswmenu
+.RI [ window ...]
+.RI [ dmenu-options ...]
 .SH DESCRIPTION
 .B lsw
 prints the title and XID of each child of each
 .IR window .
 If none are given the root window is used.
+.PP
+.B lswmenu
+is a script used by
+.IR dwm (1)
+which lists windows with the ability to select and jump
+to the specified one.
