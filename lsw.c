@@ -5,6 +5,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
+static const char *getclass(Window);
 static const char *getname(Window);
 static void lsw(Window);
 
@@ -43,8 +44,23 @@ lsw(Window win) {
 	for(w = &wins[n-1]; w >= &wins[0]; w--)
 		if(XGetWindowAttributes(dpy, *w, &wa)
 		&& !wa.override_redirect && wa.map_state == IsViewable)
-			printf("0x%07lx %s\n", *w, getname(*w));
+			printf("0x%07lx %s - %s\n", *w, getclass(*w), getname(*w));
 	XFree(wins);
+}
+
+const char *
+getclass(Window win) {
+	static char buf[BUFSIZ];
+	XClassHint xch;
+
+	if(XGetClassHint(dpy, win, &xch)) {
+		if (xch.res_class)
+			strncpy(buf, xch.res_class, sizeof buf);
+
+		XFree(xch.res_class);
+		XFree(xch.res_name);
+	}
+	return buf;
 }
 
 const char *
