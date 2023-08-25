@@ -37,9 +37,9 @@ lsw(Window win) {
 	XWindowAttributes wa;
 
 	if(!XQueryTree(dpy, win, &dw, &dw, &wins, &n))
-		return;
+		return; /* XQueryTree err */
 	if(!wins)
-		return;
+		return; /* no children wins */
 	for(w = &wins[n-1]; w >= &wins[0]; w--)
 		if(XGetWindowAttributes(dpy, *w, &wa)
 		&& !wa.override_redirect && wa.map_state == IsViewable)
