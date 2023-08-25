@@ -1,24 +1,35 @@
-lsw - list windows
-==================
-lsw prints the XID, class and title of windows to stdout.
+OVERVIEW
+--------
+This directory contains lsw, a tiny utility that prints the XID, class
+and title of windows to stdout.
+
+This distribution is a fork of suckless' lsw as of release 0.3
+(20141129) with the following differences:
+- lswmenu, a simple perl script which uses lsw and wmctrl/xdotool to
+  list windows, select and jump to the specified one
+- minor cleanups, segfault fixes
+
+See git log for complete/further differences.
+
+The original sources can be downloaded from:
+https://dl.suckless.org/tools/lsw-0.3.tar.gz
 
 
-Requirements
+REQUIREMENTS
 ------------
-In order to build lsw you need the Xlib header files.
+**Build time**:
+- c99 compiler
+- POSIX sh(1p), make(1p) and "mandatory utilities"
+- libX11
 
 
-Installation
-------------
-Edit config.mk to match your local setup (lsw is installed into
-the /usr/local namespace by default).
-
-Afterwards enter the following command to build and install lsw (if
-necessary as root):
-
-    make clean install
+INSTALL
+-------
+The shell commands `make && make install` should build and install
+this package.  See `config.mk` file for configuration parameters.
 
 
-Running lsw
------------
-See the man page for details.
+LICENSE
+-------
+lsw is licensed through MIT/X Consortium License.
+See LICENSE file for copyright and license details.
