@@ -22,6 +22,8 @@ REQUIREMENTS
 - POSIX sh(1p), make(1p) and "mandatory utilities"
 - libX11
 
+**Runtime**:
+- lswmenu requires Perl, and wmctrl(1) or xdotool(1)
 
 INSTALL
 -------
