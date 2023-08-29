@@ -5,9 +5,8 @@ use warnings;
 #use diagnostics;
 use IPC::Open2;
 
-my $VERBOSE = 0;
+my $VERBOSE = 1;
 my %WNDs = ();
-my $LSWMENU_WIN_JUMP = $ENV{LSWMENU_WIN_JUMP} // 'wmctrl';
 
 sub lswin {
 	my $args = shift || '';
@@ -57,24 +56,27 @@ sub dmenu_sel_win {
 }
 
 sub goto_sel_win {
-	my $wid = shift;
+	my ($switcher, $wid) = @_;
 
-	if ($LSWMENU_WIN_JUMP eq 'wmctrl') {
-		system("wmctrl -i -a '$wid'");
-	} elsif ($LSWMENU_WIN_JUMP eq 'xdotool') {
+	if ($switcher eq 'xdotool') {
+		print "Open: 'xdotool windowactivate $wid'\n" if $VERBOSE;
 		system("xdotool windowactivate '$wid'");
 	} else {
-		die "$0: unknown window jumper '$LSWMENU_WIN_JUMP'\n";
+		print "Open: 'wmctrl -i -a $wid'\n" if $VERBOSE;
+		system("wmctrl -i -a '$wid'");
 	}
 }
 
 sub main {
+	my $winswitch = 'wmctrl';
 	my $lswargs;
 	my @dmenuargs;
 
 	for (@ARGV) {
-		$lswargs .= "$1 " and next if /\b(0x[0-9a-h]{7})\b/;
-		push @dmenuargs, $_;
+		if    (/\bverbose\b/)         { $VERBOSE++             }
+		elsif (/\bxdotool\b/)         { $winswitch = 'xdotool' }
+		elsif (/\b(0x[0-9a-h]{7})\b/) { $lswargs  .= "$1 "     }
+		else                          { push @dmenuargs, $_    }
 	}
 
 	lswin($lswargs)
@@ -85,7 +87,7 @@ sub main {
 
 	for my $wid (keys %WNDs) {
 		if ($WNDs{ $wid } eq $sel) {
-			goto_sel_win($wid) and last;
+			goto_sel_win($winswitch, $wid) and last;
 		}
 	}
 }
