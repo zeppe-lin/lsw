@@ -6,6 +6,7 @@ use warnings;
 use IPC::Open2;
 
 my $VERBOSE = 0;
+my $WINJMP = 'wmctrl';
 my %WNDs = ();
 
 sub lswin {
@@ -56,9 +57,9 @@ sub dmenu_sel_win {
 }
 
 sub goto_sel_win {
-	my ($switcher, $wid) = @_;
+	my $wid = shift;
 
-	if ($switcher eq 'xdotool') {
+	if ($WINJMP eq 'xdotool') {
 		print "Execute 'xdotool windowactivate $wid'\n" if $VERBOSE;
 		system("xdotool windowactivate '$wid'");
 	} else {
@@ -68,21 +69,20 @@ sub goto_sel_win {
 }
 
 sub main {
-	my $winswitch = 'wmctrl';
 	my @lswargs;
 	my @dmenuargs;
 
 	for (@ARGV) {
-		if    (/\bverbose\b/)         { $VERBOSE++             }
-		elsif (/\bxdotool\b/)         { $winswitch = 'xdotool' }
-		elsif (/\b(0x[0-9a-h]{7})\b/) { push @lswargs,   $_    }
-		else                          { push @dmenuargs, $_    }
+		if    (/\bverbose\b/)         { $VERBOSE++          }
+		elsif (/\bxdotool\b/)         { $WINJMP = 'xdotool' }
+		elsif (/\b(0x[0-9a-h]{7})\b/) { push @lswargs,   $_ }
+		else                          { push @dmenuargs, $_ }
 	}
 
 	print <<EOF if $VERBOSE > 1;
 --------------------------------
 Verbosity level:  $VERBOSE
-Window switcher:  $winswitch
+Window jumper:    $WINJMP
 lsw(1) optargs:   @lswargs
 dmenu(1) optargs: @dmenuargs
 --------------------------------
@@ -96,7 +96,7 @@ EOF
 
 	for my $wid (keys %WNDs) {
 		if ($WNDs{ $wid } eq $sel) {
-			goto_sel_win($winswitch, $wid) and last;
+			goto_sel_win($wid) and last;
 		}
 	}
 }
