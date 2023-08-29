@@ -1,21 +1,24 @@
-.TH LSW 1 lsw\-VERSION
-.SH NAME
-lsw \- list windows
-.SH SYNOPSIS
-.B lsw
-.RI [ window ...]
-.PP
-.B lswmenu
-.RI [ window ...]
-.RI [ dmenu-options ...]
-.SH DESCRIPTION
-.B lsw
+.\" See LICENSE file for copyright and license details.
+.Dd August 29, 2023
+.Dt LSW 1
+.Os lsw @VERSION@
+.Sh NAME
+.Nm lsw
+.Nd list X11 windows
+.Sh SYNOPSIS
+.Nm
+.Op Ar window ...
+.Nm lswmenu
+.Op Ar window ...
+.Op Ar dmenu_options ...
+.Sh DESCRIPTION
+.Nm lsw
 prints the XID, class and title of each child of each
-.IR window .
+.Op window .
 If none are given the root window is used.
-.PP
-.B lswmenu
-is a script used by
-.IR dwm (1)
-which lists windows with the ability to select and jump
-to the specified one.
+.Pp
+.Nm lswmenu
+is a script which lists windows with the ability to
+select and jump to the specified one.
+.Sh SEE ALSO
+.Xr dmenu 1
