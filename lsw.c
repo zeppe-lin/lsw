@@ -6,48 +6,24 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
+/*
+ * Function declarations.
+ */
+
 static const char *getclass(Window);
 static const char *getname(Window);
 static void lsw(Window);
 
+/*
+ * Global variables.
+ */
+
 static Atom netwmname;
 static Display *dpy;
 
-int
-main(int argc, char *argv[]) {
-	int i;
-
-	if(!(dpy = XOpenDisplay(NULL))) {
-		fprintf(stderr, "%s: cannot open display\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
-	netwmname = XInternAtom(dpy, "_NET_WM_NAME", False);
-
-	if(argc < 2)
-		lsw(DefaultRootWindow(dpy));
-	else for(i = 1; i < argc; i++)
-		lsw(strtol(argv[i], NULL, 0));
-
-	XCloseDisplay(dpy);
-	return EXIT_SUCCESS;
-}
-
-void
-lsw(Window win) {
-	unsigned int n;
-	Window *wins, *w, dw;
-	XWindowAttributes wa;
-
-	if(!XQueryTree(dpy, win, &dw, &dw, &wins, &n))
-		return; /* XQueryTree err */
-	if(!wins)
-		return; /* no children wins */
-	for(w = &wins[n-1]; w >= &wins[0]; w--)
-		if(XGetWindowAttributes(dpy, *w, &wa)
-		&& !wa.override_redirect && wa.map_state == IsViewable)
-			printf("0x%07lx %s - %s\n", *w, getclass(*w), getname(*w));
-	XFree(wins);
-}
+/*
+ * Function implementations.
+ */
 
 const char *
 getclass(Window win) {
@@ -83,3 +59,41 @@ getname(Window win) {
 	buf[sizeof buf - 1] = '\0';
 	return buf;
 }
+
+void
+lsw(Window win) {
+	unsigned int n;
+	Window *wins, *w, dw;
+	XWindowAttributes wa;
+
+	if(!XQueryTree(dpy, win, &dw, &dw, &wins, &n))
+		return; /* XQueryTree err */
+	if(!wins)
+		return; /* no children wins */
+	for(w = &wins[n-1]; w >= &wins[0]; w--)
+		if(XGetWindowAttributes(dpy, *w, &wa)
+		&& !wa.override_redirect && wa.map_state == IsViewable)
+			printf("0x%07lx %s - %s\n", *w, getclass(*w), getname(*w));
+	XFree(wins);
+}
+
+int
+main(int argc, char *argv[]) {
+	int i;
+
+	if(!(dpy = XOpenDisplay(NULL))) {
+		fprintf(stderr, "%s: cannot open display\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	netwmname = XInternAtom(dpy, "_NET_WM_NAME", False);
+
+	if(argc < 2)
+		lsw(DefaultRootWindow(dpy));
+	else for(i = 1; i < argc; i++)
+		lsw(strtol(argv[i], NULL, 0));
+
+	XCloseDisplay(dpy);
+	return EXIT_SUCCESS;
+}
+
+/* End of file. */
