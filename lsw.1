@@ -9,12 +9,14 @@
 .Nm
 .Op Ar window ...
 .Nm lswmenu
+.Op Ar -verbose
+.Op Ar -xdotool
 .Op Ar window ...
 .Op Ar dmenu_options ...
 .Sh DESCRIPTION
 .Nm lsw
 prints the XID, class and title of each child of each
-.Op window .
+.Ar window .
 If none are given the root window is used.
 .Pp
 .Nm lswmenu
@@ -26,25 +28,13 @@ and
 or
 .Xr xdotool 1
 to list windows, select and jump to the specified one.
-.Sh ENVIRONMENT
-The following environment variables affect the execution of
-.Nm lswmenu :
-.Bl -tag -width indent
-.It Ev LSWMENU_WIN_JUMP
-If the environment variable
-.Ev LSWMENU_WIN_JUMP
-is set to
-.Dq xdotool ,
-use
+Use
+.Ar -verbose
+option to see what is being done, and
+.Ar -xdotool
+option to use
 .Xr xdotool 1
-to jump to the specified window after it was selected on
-.Xr dmenu 1
-invocation.
-Also, can be set to
-.Dq wmctrl ,
-or unset, which means
-.Xr wmctrl 1
-will be used by default.
-.El
+over default
+.Xr wmctrl 1 .
 .Sh SEE ALSO
 .Xr dmenu 1
