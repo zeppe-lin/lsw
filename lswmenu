@@ -59,10 +59,10 @@ sub dmenu_sel_win {
 sub goto_sel_win {
 	my $wid = shift;
 
-	if ($LSW_WIN_JUMPER eq 'xdotool') {
-		system("xdotool windowactivate '$wid'");
-	} elsif ($LSW_WIN_JUMPER eq 'wmctrl') {
+	if ($LSW_WIN_JUMPER eq 'wmctrl') {
 		system("wmctrl -i -a '$wid'");
+	} elsif ($LSW_WIN_JUMPER eq 'xdotool') {
+		system("xdotool windowactivate '$wid'");
 	} else {
 		die "$0: unknown window jumper '$LSW_WIN_JUMPER'\n";
 	}
