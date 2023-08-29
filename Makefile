@@ -8,7 +8,7 @@ install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	cp -f lsw lswmenu ${DESTDIR}${PREFIX}/bin/
-	sed "s/VERSION/${VERSION}/" lsw.1 > ${DESTDIR}${MANPREFIX}/man1/lsw.1
+	sed "s/@VERSION@/${VERSION}/" lsw.1 > ${DESTDIR}${MANPREFIX}/man1/lsw.1
 	chmod 0755 ${DESTDIR}${PREFIX}/bin/lsw
 	chmod 0755 ${DESTDIR}${PREFIX}/bin/lswmenu
 	chmod 0644 ${DESTDIR}${MANPREFIX}/man1/lsw.1
