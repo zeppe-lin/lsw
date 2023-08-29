@@ -39,17 +39,17 @@ sub dmenu_sel_win {
 
 	print "Open pipe into 'dmenu @args'\n" if $VERBOSE;
 
-	open2(my $CHLD_OUT, my $CHLD_IN, 'dmenu', @args)
+	open2(my $chld_out, my $chld_in, 'dmenu', @args)
 		or die "$0: open2() failed: $!\n";
 
-	print $CHLD_IN "$WNDs{ $_ }\n" for sort keys %WNDs;
-	close $CHLD_IN;
+	print $chld_in "$WNDs{ $_ }\n" for sort keys %WNDs;
+	close $chld_in;
 
-	while (<$CHLD_OUT>) {
+	while (<$chld_out>) {
 		chomp;
 		$output .= $_;
 	}
-	close $CHLD_OUT;
+	close $chld_out;
 
 	print "Selected '$output'.\n" if $VERBOSE;
 
