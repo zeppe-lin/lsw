@@ -35,7 +35,7 @@ sub lswin {
 
 sub dmenu_sel_win {
 	my @args = @_;
-	my $output;
+	my $selwin;
 
 	print "Open pipe into 'dmenu @args'\n" if $VERBOSE;
 
@@ -47,13 +47,13 @@ sub dmenu_sel_win {
 
 	while (<$chld_out>) {
 		chomp;
-		$output .= $_;
+		$selwin .= $_;
 	}
 	close $chld_out;
 
-	print "Selected '$output'.\n" if $VERBOSE;
+	print "Selected '$selwin'.\n" if $VERBOSE;
 
-	return $output;
+	return $selwin;
 }
 
 sub goto_sel_win {
