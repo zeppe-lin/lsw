@@ -18,7 +18,7 @@ https://dl.suckless.org/tools/lsw-0.3.tar.gz
 REQUIREMENTS
 ------------
 **Build time**:
-- c99 compiler
+- C99 compiler
 - POSIX sh(1p), make(1p) and "mandatory utilities"
 - libX11
 
