@@ -5,7 +5,7 @@ use warnings;
 #use diagnostics;
 use IPC::Open2;
 
-my $VERBOSE = 1;
+my $VERBOSE = 0;
 my %WNDs = ();
 
 sub lswin {
