@@ -9,11 +9,11 @@ my $VERBOSE = 0;
 my %WNDs = ();
 
 sub lswin {
-	my $args = shift || '';
+	my @args = @_;
 
-	print "Open: 'lsw $args'\n" if $VERBOSE;
+	print "Open pipe into 'lsw @args'\n" if $VERBOSE;
 
-	open(my $lsw_fh, '-|', "lsw $args")
+	open(my $lsw_fh, '-|', "lsw @args")
 		or die "$0: couldn't open a pipe into lsw: $!\n";
 
 	while (my $line = <$lsw_fh>) {
@@ -36,7 +36,7 @@ sub dmenu_sel_win {
 	my @args = @_;
 	my $output;
 
-	print "Open: 'dmenu @args'\n" if $VERBOSE;
+	print "Open pipe into 'dmenu @args'\n" if $VERBOSE;
 
 	open2(my $CHLD_OUT, my $CHLD_IN, 'dmenu', @args)
 		or die "$0: open2() failed: $!\n";
@@ -59,27 +59,36 @@ sub goto_sel_win {
 	my ($switcher, $wid) = @_;
 
 	if ($switcher eq 'xdotool') {
-		print "Open: 'xdotool windowactivate $wid'\n" if $VERBOSE;
+		print "Execute 'xdotool windowactivate $wid'\n" if $VERBOSE;
 		system("xdotool windowactivate '$wid'");
 	} else {
-		print "Open: 'wmctrl -i -a $wid'\n" if $VERBOSE;
+		print "Execute 'wmctrl -i -a $wid'\n" if $VERBOSE;
 		system("wmctrl -i -a '$wid'");
 	}
 }
 
 sub main {
 	my $winswitch = 'wmctrl';
-	my $lswargs;
+	my @lswargs;
 	my @dmenuargs;
 
 	for (@ARGV) {
 		if    (/\bverbose\b/)         { $VERBOSE++             }
 		elsif (/\bxdotool\b/)         { $winswitch = 'xdotool' }
-		elsif (/\b(0x[0-9a-h]{7})\b/) { $lswargs  .= "$1 "     }
+		elsif (/\b(0x[0-9a-h]{7})\b/) { push @lswargs,   $_    }
 		else                          { push @dmenuargs, $_    }
 	}
 
-	lswin($lswargs)
+	print <<EOF if $VERBOSE > 1;
+--------------------------------
+Verbosity level:  $VERBOSE
+Window switcher:  $winswitch
+lsw(1) optargs:   @lswargs
+dmenu(1) optargs: @dmenuargs
+--------------------------------
+EOF
+
+	lswin(@lswargs)
 		or die "$0: no windows available\n";
 
 	my $sel = dmenu_sel_win(@dmenuargs)
