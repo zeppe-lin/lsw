@@ -26,6 +26,3 @@ LIBS      = -L${X11LIB} -lX11
 # flags
 CFLAGS    = -ansi -pedantic -Wall -DVERSION=\"${VERSION}\" ${INCS}
 LDFLAGS   = ${LIBS}
-
-# compiler and linker
-CC        = cc
