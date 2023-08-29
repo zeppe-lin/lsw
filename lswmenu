@@ -5,13 +5,15 @@ use warnings;
 #use diagnostics;
 use IPC::Open2;
 
+my $VERBOSE = 0;
 my %WNDs = ();
 
 sub lswin {
-	my $arg = shift || '';
-	#print "lsw args: '$arg'\n";
+	my $args = shift || '';
 
-	open(my $lsw_fh, '-|', "lsw $arg")
+	print "Open: 'lsw $args'\n" if $VERBOSE;
+
+	open(my $lsw_fh, '-|', "lsw $args")
 		or die "$0: couldn't open a pipe into lsw: $!\n";
 
 	while (my $line = <$lsw_fh>) {
@@ -20,7 +22,7 @@ sub lswin {
 		my ($wid, $text) = ($1, $2)
 			if $line =~ /^(0x[0-9a-h]{7}) (.*)$/;
 
-		#print "Window $wid: $text\n";
+		print "Window $wid: $text\n" if $VERBOSE;
 
 		$WNDs{ $wid } = length($text) ? $text : "(null)";
 	}
@@ -34,6 +36,8 @@ sub dmenu_sel_win {
 	my @args = @_;
 	my $output;
 
+	print "Open: 'dmenu @args'\n" if $VERBOSE;
+
 	open2(my $CHLD_OUT, my $CHLD_IN, 'dmenu', @args)
 		or die "$0: open2() failed: $!\n";
 
@@ -46,7 +50,7 @@ sub dmenu_sel_win {
 	}
 	close $CHLD_OUT;
 
-	#print "Selected '$output'.\n";
+	print "Selected '$output'.\n" if $VERBOSE;
 
 	return $output;
 }
@@ -59,15 +63,15 @@ sub goto_sel_win {
 }
 
 sub main {
-	my $lswarg;
+	my $lswargs;
 	my @dmenuargs;
 
 	for (@ARGV) {
-		$lswarg = $1 and next if /\b(0x[0-9a-h]{7})\b/;
+		$lswargs .= "$1 " and next if /\b(0x[0-9a-h]{7})\b/;
 		push @dmenuargs, $_;
 	}
 
-	lswin($lswarg)
+	lswin($lswargs)
 		or die "$0: no windows available\n";
 
 	my $sel = dmenu_sel_win(@dmenuargs)
