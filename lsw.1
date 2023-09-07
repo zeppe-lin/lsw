@@ -2,9 +2,11 @@
 .Dd August 29, 2023
 .Dt LSW 1
 .Os lsw @VERSION@
+.\" ==================================================================
 .Sh NAME
 .Nm lsw
 .Nd list X11 windows
+.\" ==================================================================
 .Sh SYNOPSIS
 .Nm
 .Op Ar window ...
@@ -13,6 +15,7 @@
 .Op Ar -xdotool
 .Op Ar window ...
 .Op Ar dmenu_options ...
+.\" ==================================================================
 .Sh DESCRIPTION
 .Nm lsw
 prints the XID, class and title of each child of each
@@ -36,5 +39,8 @@ option to use
 .Xr xdotool 1
 over default
 .Xr wmctrl 1 .
+.\" ==================================================================
 .Sh SEE ALSO
 .Xr dmenu 1
+.\" vim: cc=72 tw=70
+.\" End of file.
