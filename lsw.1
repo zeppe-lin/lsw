@@ -11,8 +11,9 @@
 .Nm
 .Op Ar window ...
 .Nm lswmenu
-.Op Ar -verbose
-.Op Ar -xdotool
+.Op Ar \-verbose
+.Op Ar \-xdotool
+.Op Ar \-xdo
 .Op Ar window ...
 .Op Ar dmenu_options ...
 .\" ==================================================================
@@ -27,17 +28,19 @@ is a simple Perl script which uses
 .Nm lsw ,
 .Xr dmenu 1 ,
 and
-.Xr wmctrl 1
-or
-.Xr xdotool 1
+.Xr wmctrl 1 Ns / Ns Xr xdotool 1 Ns / Ns Xr xdo 1
 to list windows, select and jump to the specified one.
 Use
-.Ar -verbose
+.Ar \-verbose
 option to see what is being done, and
-.Ar -xdotool
+.Ar \-xdotool
+or
+.Ar \-xdo
 option to use
 .Xr xdotool 1
-over default
+or
+.Xr xdo 1
+utility as window jumper instead of the default
 .Xr wmctrl 1 .
 .\" ==================================================================
 .Sh SEE ALSO
