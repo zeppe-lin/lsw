@@ -60,11 +60,20 @@ sub goto_sel_win {
 	my $wid = shift;
 
 	if ($WINJMP eq 'xdotool') {
-		print "Execute 'xdotool windowactivate $wid'\n" if $VERBOSE;
+		print "Execute 'xdotool windowactivate $wid'\n"
+			if $VERBOSE;
+
 		system("xdotool windowactivate '$wid'");
-	} else {
+	} elsif ($WINJMP eq 'wmctrl') {
 		print "Execute 'wmctrl -i -a $wid'\n" if $VERBOSE;
+
 		system("wmctrl -i -a '$wid'");
+	} elsif ($WINJMP eq 'xdo') {
+		print "Execute 'xdo activate $wid'\n" if $VERBOSE;
+
+		system("xdo activate '$wid'");
+	} else {
+		die "$0: unknown window jumper: $WINJMP\n";
 	}
 }
 
@@ -75,6 +84,7 @@ sub main {
 	for (@ARGV) {
 		if    (/\bverbose\b/)         { $VERBOSE++          }
 		elsif (/\bxdotool\b/)         { $WINJMP = 'xdotool' }
+		elsif (/\bxdo\b/)             { $WINJMP = 'xdo'     }
 		elsif (/\b(0x[0-9a-h]{7})\b/) { push @lswargs,   $_ }
 		else                          { push @dmenuargs, $_ }
 	}
