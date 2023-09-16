@@ -6,8 +6,8 @@ use warnings;
 use IPC::Open2;
 
 my $VERBOSE = 0;
-my $WINJMP = 'wmctrl';
-my %WNDs = ();
+my $WINJMP  = 'wmctrl';
+my %WNDs    = ();
 
 sub lswin {
 	my @args = @_;
@@ -43,12 +43,14 @@ sub dmenu_sel_win {
 		or die "$0: open2() failed: $!\n";
 
 	print $chld_in "$WNDs{ $_ }\n" for sort keys %WNDs;
+
 	close $chld_in;
 
 	while (<$chld_out>) {
 		chomp;
 		$selwin .= $_;
 	}
+
 	close $chld_out;
 
 	print "Selected '$selwin'.\n" if $VERBOSE;
@@ -113,3 +115,6 @@ EOF
 
 main() if not caller;
 1;
+
+# vim: cc=72 tw=70
+# End of file.
