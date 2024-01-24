@@ -1,7 +1,7 @@
 OVERVIEW
 --------
 This directory contains lsw, a tiny utility that prints the XID,
-class and title of X11 windows to stdout.
+class and title of X windows to stdout.
 
 This distribution is a fork of suckless' lsw as of release 0.3
 (20141129) with the following differences:
@@ -24,8 +24,9 @@ REQUIREMENTS
 - libX11
 
 **Runtime**:
-- lswmenu requires Perl, dmenu(1), and wmctrl(1) or xdotool(1)
-  or xdo(1)
+- lswmenu requires Perl, dmenu(1), and one of the following:
+  wmctrl(1) or xdotool(1) or xdo(1)
+
 
 INSTALL
 -------
