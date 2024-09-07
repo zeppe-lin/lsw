@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# lswmenu - list windows, select and jump to the specified one
 # See LICENSE file for copyright and license details.
 
 use strict;
