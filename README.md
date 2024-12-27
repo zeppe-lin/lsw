@@ -7,13 +7,14 @@ and title of X windows to stdout.
 This distribution is a fork of suckless' lsw as of release 0.3
 (20141129) with the following differences:
   * lswmenu, a simple perl script which uses lsw, dmenu and wmctrl or
-    xdotool or xdo to list windows, select and jump to the specified one
+    xdotool or xdo to list windows, select and jump to the specified
+    one
   * minor cleanups, segfault fixes
 
 See git log for complete/further differences.
 
 The original sources can be downloaded from:
-https://dl.suckless.org/tools/lsw-0.3.tar.gz
+  * https://dl.suckless.org/tools/lsw-0.3.tar.gz
 
 
 REQUIREMENTS
@@ -27,15 +28,15 @@ Build time
 
 Runtime
 -------
-  * lswmenu requires Perl, dmenu(1), and one of the following: wmctrl(1)
-    or xdotool(1) or xdo(1)
+  * lswmenu requires Perl, dmenu(1), and one of the following:
+    wmctrl(1) or xdotool(1) or xdo(1)
 
 
 INSTALL
 =======
 
-The shell commands `make && make install` should build and install this
-package.
+The shell commands `make && make install` should build and install
+this package.
 
 See `config.mk` file for configuration parameters.
 
