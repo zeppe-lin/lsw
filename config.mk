@@ -1,6 +1,6 @@
 # project metadata
 NAME      = lsw
-VERSION   = 0.3
+VERSION   = 0.3z1
 DIST      = lsw-${VERSION}
 
 # paths
