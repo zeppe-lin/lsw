@@ -1,8 +1,8 @@
 OVERVIEW
 ========
 
-This directory contains lsw, a tiny utility that prints the XID, class
-and title of X windows to stdout.
+This repository contains lsw, a tiny utility that prints the XID,
+class and title of X windows to stdout.
 
 This distribution is a fork of suckless' lsw as of release 0.3
 (20141129) with the following differences:
